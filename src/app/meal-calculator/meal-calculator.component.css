@@ -1,0 +1,285 @@
+tbody tr:hover,
+tbody tr.selected {
+  background: var(--accent);
+}
+:root {
+  color-scheme: light;
+  --background: #f3f6f4;
+  --surface: #ffffff;
+  --primary: #245c3a;
+  --primary-dark: #174229;
+  --accent: #dff2e5;
+  --text: #17211a;
+  --muted: #647068;
+  --border: #dce4de;
+  --shadow: 0 18px 50px rgba(23, 66, 41, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  padding: 32px 16px;
+  display: grid;
+  place-items: center;
+  color: var(--text);
+  background: radial-gradient(circle at top left, #e5f3e9 0, transparent 38%), var(--background);
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.calculator {
+  width: min(100%, 720px);
+  overflow: hidden;
+  border: 1px solid rgba(36, 92, 58, 0.1);
+  border-radius: 24px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.calculator__header {
+  padding: 36px 40px 28px;
+  color: #ffffff;
+  background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  color: #bfe1c9;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(1.8rem, 5vw, 2.6rem);
+  line-height: 1.1;
+}
+
+.calculator__header > p:last-child {
+  max-width: 540px;
+  margin: 14px 0 0;
+  color: #e0eee4;
+  line-height: 1.55;
+}
+
+.menu {
+  padding: 24px 40px 0;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 15px 12px;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+}
+
+th {
+  color: var(--muted);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+tbody tr {
+  transition: background-color 160ms ease;
+}
+
+td label {
+  display: block;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.selection-column {
+  width: 86px;
+  text-align: center;
+}
+
+.price-column,
+.price {
+  width: 110px;
+  text-align: right;
+  white-space: nowrap;
+}
+
+input[type="checkbox"] {
+  width: 21px;
+  height: 21px;
+  margin: 0;
+  accent-color: var(--primary);
+  cursor: pointer;
+}
+
+.summary {
+  margin: 28px 40px 0;
+  padding: 22px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  border-radius: 16px;
+  background: var(--accent);
+}
+
+.summary h2 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.summary p {
+  margin: 5px 0 0;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+#total {
+  color: var(--primary-dark);
+  font-size: clamp(1.7rem, 5vw, 2.2rem);
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.clear-button {
+  margin: 16px 40px 32px;
+  padding: 10px 0;
+  border: 0;
+  color: var(--primary);
+  background: transparent;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.clear-button:hover:not(:disabled) {
+  color: var(--primary-dark);
+  text-decoration: underline;
+}
+
+.clear-button:focus-visible,
+input[type="checkbox"]:focus-visible {
+  outline: 3px solid #72aa83;
+  outline-offset: 3px;
+}
+
+.clear-button:disabled {
+  color: #a4ada7;
+  cursor: not-allowed;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 560px) {
+  body {
+    padding: 0;
+    place-items: start center;
+  }
+
+  .calculator {
+    min-height: 100vh;
+    border: 0;
+    border-radius: 0;
+  }
+
+  .calculator__header,
+  .menu {
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+
+  th,
+  td {
+    padding: 14px 7px;
+  }
+
+  .selection-column {
+    width: 64px;
+  }
+
+  .price-column,
+  .price {
+    width: 86px;
+  }
+
+  .summary {
+    margin-right: 20px;
+    margin-left: 20px;
+    padding: 18px;
+  }
+
+  .clear-button {
+    margin-left: 20px;
+  }
+
+  .quantity-column {
+    width: 132px;
+    text-align: center;
+  }
+
+  .quantity-control {
+    display: inline-flex;
+    align-items: center;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--surface);
+  }
+
+  .quantity-button {
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border: 0;
+    color: var(--primary);
+    background: transparent;
+    font: inherit;
+    font-size: 1.25rem;
+    font-weight: 800;
+    cursor: pointer;
+  }
+
+  .quantity-button:hover:not(:disabled) {
+    color: #ffffff;
+    background: var(--primary);
+  }
+
+  .quantity-button:disabled {
+    color: #a4ada7;
+    cursor: not-allowed;
+  }
+
+  .quantity {
+    min-width: 32px;
+    color: var(--text);
+    font-weight: 700;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+  }
+
+  @media (max-width: 768px) and (orientation: portrait) {
+    .menu {
+      padding-left: 0 !important;
+    }
+  }
+
+
+}

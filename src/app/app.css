@@ -1,0 +1,185 @@
+:host {
+  --background: #f3f6f4;
+  --surface: #ffffff;
+  --primary: #245c3a;
+  --primary-dark: #174229;
+  --accent: #dff2e5;
+  --text: #17211a;
+  --muted: #647068;
+  --border: #dce4de;
+  --shadow: 0 18px 50px rgba(23, 66, 41, 0.12);
+
+  display: block;
+  min-height: 100vh;
+}
+
+:host {
+  color: var(--text);
+  background:
+    radial-gradient(
+      circle at top left,
+      #e5f3e9 0,
+      transparent 38%
+    ),
+    var(--background);
+
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.upload-card {
+  width: min(100% - 48px, 460px);
+  padding: 44px 32px;
+  border: 1px solid rgba(36, 92, 58, 0.1);
+  border-radius: 24px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  text-align: center;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+h1 {
+  margin: 0 0 10px;
+  color: var(--primary-dark);
+  font-size: clamp(1.7rem, 5vw, 2.2rem);
+}
+
+.description {
+  margin: 0 0 28px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.upload-button {
+  min-width: 180px;
+  padding: 13px 30px;
+  border: 0;
+  border-radius: 12px;
+  color: #ffffff;
+  background: linear-gradient(
+    135deg,
+    var(--primary-dark),
+    var(--primary)
+  );
+
+  box-shadow: 0 8px 20px rgba(23, 66, 41, 0.2);
+
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.upload-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 11px 24px rgba(23, 66, 41, 0.26);
+}
+
+.upload-button:active {
+  transform: translateY(0);
+}
+
+.upload-button:focus-visible {
+  outline: 3px solid #72aa83;
+  outline-offset: 3px;
+}
+
+.upload-status {
+  min-height: 1.5em;
+  margin: 18px 0 0;
+  padding: 10px 14px;
+  border-radius: 10px;
+  color: var(--muted);
+  background: var(--accent);
+  overflow-wrap: anywhere;
+}
+
+app-meal-calculator {
+  display: block;
+  width: min(100% - 48px, 900px);
+  margin: 0 auto;
+}
+
+.card {
+  width: min(100% - 48px, 460px);
+  padding: 44px 32px;
+  border: 1px solid rgba(36, 92, 58, 0.1);
+  border-radius: 24px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  text-align: center;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.login-button {
+  min-width: 180px;
+  padding: 13px 30px;
+  border: 0;
+  border-radius: 12px;
+  color: #ffffff;
+  background: linear-gradient(
+    135deg,
+    var(--primary-dark),
+    var(--primary)
+  );
+
+  box-shadow: 0 8px 20px rgba(23, 66, 41, 0.2);
+
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.login-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 11px 24px rgba(23, 66, 41, 0.26);
+}
+
+.login-button:active {
+  transform: translateY(0);
+}
+
+.login-button:focus-visible {
+  outline: 3px solid #72aa83;
+  outline-offset: 3px;
+}
+.spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-right: 8px;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
