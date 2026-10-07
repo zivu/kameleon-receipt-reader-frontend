@@ -1,115 +1,121 @@
-<main class="calculator">
+@if (isLoading()) {
+  <main class="card upload-card">
+    <h1>Odśwież stronę za chwilę :)</h1>
+  </main>
+} @else {
+  <main class="calculator">
 
-  <header class="calculator__header">
-    <p class="eyebrow">Skomponuj swój posiłek</p>
+    <header class="calculator__header">
+      <p class="eyebrow">Skomponuj swój posiłek</p>
 
-    <h1>Kalkulator posiłku</h1>
+      <h2>Kalkulator posiłku</h2>
 
-    <p>
-      Ustaw liczbę porcji przyciskami + i −, a suma zostanie obliczona automatycznie.
-    </p>
-  </header>
+      <p>
+        Ustaw liczbę porcji przyciskami + i −, a suma zostanie obliczona automatycznie.
+      </p>
+    </header>
 
-  <section class="menu">
+    <section class="menu">
 
-    <table>
-      <thead>
-      <tr>
-        <th scope="col" class="quantity-column">
-          Ilość
-        </th>
+      <table>
+        <thead>
+        <tr>
+          <th scope="col" class="quantity-column">
+            Ilość
+          </th>
 
-        <th scope="col">
-          Pozycja
-        </th>
+          <th scope="col">
+            Pozycja
+          </th>
 
-        <th scope="col" class="price-column">
-          Cena/szt.
-        </th>
-      </tr>
-      </thead>
+          <th scope="col" class="price-column">
+            Cena/szt.
+          </th>
+        </tr>
+        </thead>
 
-      <tbody>
-        @for (item of items; track item.name) {
-          <tr [class.selected]="isSelected(item)">
+        <tbody>
+          @for (item of items(); track item.name) {
+            <tr [class.selected]="isSelected(item)">
 
-            <td class="quantity-column">
-              <div
-                class="quantity-control"
-                role="group"
-                [attr.aria-label]="'Ilość: ' + item.name"
-              >
-                <button
-                  type="button"
-                  class="quantity-button"
-                  [disabled]="getQuantity(item) === 0"
-                  [attr.aria-label]="'Zmniejsz ilość: ' + item.name"
-                  (click)="decreaseQuantity(item)"
+              <td class="quantity-column">
+                <div
+                  class="quantity-control"
+                  role="group"
+                  [attr.aria-label]="'Ilość: ' + item.name"
                 >
-                  −
-                </button>
+                  <button
+                    type="button"
+                    class="quantity-button"
+                    [disabled]="getQuantity(item) === 0"
+                    [attr.aria-label]="'Zmniejsz ilość: ' + item.name"
+                    (click)="decreaseQuantity(item)"
+                  >
+                    −
+                  </button>
 
-                <output
-                  class="quantity"
-                  [attr.aria-label]="'Liczba porcji: ' + item.name"
-                >
-                  {{ getQuantity(item) }}
-                </output>
+                  <output
+                    class="quantity"
+                    [attr.aria-label]="'Liczba porcji: ' + item.name"
+                  >
+                    {{ getQuantity(item) }}
+                  </output>
 
-                <button
-                  type="button"
-                  class="quantity-button"
-                  [attr.aria-label]="'Zwiększ ilość: ' + item.name"
-                  (click)="increaseQuantity(item)"
-                >
-                  +
-                </button>
-              </div>
-            </td>
+                  <button
+                    type="button"
+                    class="quantity-button"
+                    [attr.aria-label]="'Zwiększ ilość: ' + item.name"
+                    (click)="increaseQuantity(item)"
+                  >
+                    +
+                  </button>
+                </div>
+              </td>
 
-            <td class="item-name">
-              {{ item.name }}
-            </td>
+              <td class="item-name">
+                {{ item.name }}
+              </td>
 
-            <td class="price">
-              {{ item.unitPricePaid | currency:'PLN':'symbol':'1.2-2':'pl' }}
-            </td>
+              <td class="price">
+                {{ item.unitPricePaid | currency:'PLN':'symbol':'1.2-2':'pl' }}
+              </td>
 
-          </tr>
+            </tr>
+          }
+        </tbody>
+      </table>
+
+    </section>
+
+    <section class="summary">
+
+      <div>
+        <h2>Razem</h2>
+
+        @if (selectionCount === 0) {
+          <p>Nie wybrano żadnej pozycji</p>
+        } @else {
+          <p>
+            Wybrano {{ selectionCount }}
+            {{ selectionCount === 1 ? 'porcję' : 'porcji' }}
+          </p>
         }
-      </tbody>
-    </table>
+      </div>
 
-  </section>
+      <output class="total">
+        {{ total | currency:'PLN':'symbol':'1.2-2':'pl' }}
+      </output>
 
-  <section class="summary">
+    </section>
 
-    <div>
-      <h2>Razem</h2>
+    <button
+      type="button"
+      class="clear-button"
+      [disabled]="selectionCount === 0"
+      (click)="clearSelection()"
+    >
+      Wyczyść wybór
+    </button>
 
-      @if (selectionCount === 0) {
-        <p>Nie wybrano żadnej pozycji</p>
-      } @else {
-        <p>
-          Wybrano {{ selectionCount }}
-          {{ selectionCount === 1 ? 'porcję' : 'porcji' }}
-        </p>
-      }
-    </div>
-
-    <output class="total">
-      {{ total | currency:'PLN':'symbol':'1.2-2':'pl' }}
-    </output>
-
-  </section>
-
-  <button
-    type="button"
-    class="clear-button"
-    [disabled]="selectionCount === 0"
-    (click)="clearSelection()"
-  >
-    Wyczyść wybór
-  </button>
-
-</main>
+  </main>
+}

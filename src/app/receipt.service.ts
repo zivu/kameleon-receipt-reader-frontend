@@ -1,20 +1,29 @@
 import { inject, Service } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { firstValueFrom, Observable } from 'rxjs';
 import { ReceiptResponse } from './receipt.model';
 import { environment } from '../environments/environment';
+import QRCode from 'qrcode';
 
 @Service()
 export class ReceiptService {
-
   private http = inject(HttpClient);
 
-  uploadReceipt(file: File): Observable<ReceiptResponse> {
+  async uploadReceipt(file: File): Promise<string> {
     const formData = new FormData();
     formData.append('receipt', file);
-    return this.http.post<ReceiptResponse>(`${environment.apiUrl}/api/receipt`, formData, {
-      withCredentials: true,
-    });
+    const uuid = await firstValueFrom(
+      this.http.post<string>(`${environment.apiUrl}/api/receipt`, formData, {
+        withCredentials: true,
+      }),
+    );
+    return  window.location.origin + '/meal-calculator/' + uuid;
+  }
+
+  fetchReceipt(uuid: string): Observable<ReceiptResponse> {
+    console.log("fetching receipt");
+    const fetchReceiptUrl = `${environment.apiUrl}/api/receipt/${uuid}`;
+    return this.http.get<ReceiptResponse>(fetchReceiptUrl);
   }
 
 }

@@ -1,6 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input, signal } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
 import { ReceiptItem } from '../receipt.model';
+import { ActivatedRoute } from '@angular/router';
+import { ReceiptService } from '../receipt.service';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-meal-calculator',
@@ -10,9 +13,28 @@ import { ReceiptItem } from '../receipt.model';
   styleUrl: './meal-calculator.component.css',
 })
 export class MealCalculator {
-  @Input() items: ReceiptItem[] = [];
-
+  items = signal<ReceiptItem[]>([]);
+  receiptService = inject(ReceiptService);
   quantities: Record<string, number> = {};
+  uuid: string = '';
+  isLoading = signal<boolean>(true);
+
+  constructor(private route: ActivatedRoute) {
+    console.log(this.route.snapshot.paramMap.get('uuid'));
+  }
+
+  ngOnInit() {
+    this.uuid = this.route.snapshot.paramMap.get('uuid')!;
+    try {
+      const receipt = firstValueFrom(this.receiptService.fetchReceipt(this.uuid));
+      receipt.then((receipt) => {
+        this.items.set(receipt.items);
+        this.isLoading.set(false);
+      });
+    } catch (error) {
+      console.log("Failed to fetch receipt", error);
+    }
+  }
 
   getQuantity(item: ReceiptItem): number {
     return this.quantities[item.name] ?? 0;
@@ -39,7 +61,7 @@ export class MealCalculator {
   }
 
   get total(): number {
-    return this.items.reduce((sum, item) => {
+    return this.items().reduce((sum, item) => {
       return sum + item.unitPricePaid * this.getQuantity(item);
     }, 0);
   }
