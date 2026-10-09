@@ -17,7 +17,7 @@ export class ReceiptService {
         withCredentials: true,
       }),
     );
-    return  window.location.origin + '/meal-calculator/' + uuid;
+    return  window.location.origin + '/kameleon-receipt-reader-frontend/meal-calculator/' + uuid;
   }
 
   fetchReceipt(uuid: string): Observable<ReceiptResponse> {
