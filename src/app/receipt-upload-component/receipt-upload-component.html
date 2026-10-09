@@ -1,0 +1,56 @@
+@if (!authenticated()) {
+  <main class="card login-card">
+    <h1>Receipt Calculator</h1>
+
+    <p class="description">
+      Sign in with Google to continue.
+    </p>
+
+    <button
+      type="button"
+      class="login-button"
+      (click)="login()"
+    >
+      Sign in with Google
+    </button>
+  </main>
+} @else if (qrCode === '') {
+  <main class="card upload-card">
+    <h1>Dodaj paragon</h1>
+
+    <p class="description">
+      Kliknij przycisk, aby wybrać plik z urządzenia albo zrobić zdjęcie
+    </p>
+
+    <input
+      #fileInput
+      type="file"
+      accept="image/*"
+      hidden
+      (change)="onFileSelected($event)"
+    >
+
+    <button
+      type="button"
+      class="upload-button"
+      (click)="fileInput.click()"
+    >
+      @if (isLoading) {
+        <span class="spinner"></span>
+        Przetwarzanie...
+      } @else {
+        Dodaj
+      }
+    </button>
+
+    <p class="upload-status" aria-live="polite">
+      {{ status() }}
+    </p>
+  </main>
+} @else {
+  <div class="card upload-cardqr-container">
+    <img [src]="qrCode" alt="QR code">
+    <p><a [href]="fetchReceiptUrl" class="upload-button no-href">Zobacz paragon</a></p>
+
+  </div>
+}
