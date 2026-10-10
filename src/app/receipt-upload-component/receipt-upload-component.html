@@ -50,7 +50,22 @@
 } @else {
   <div class="card upload-cardqr-container">
     <img [src]="qrCode" alt="QR code">
+    <p>
+    <button
+      type="button"
+      class="upload-button"
+      (click)="copyUrl()"
+      style="margin-bottom: 5px"
+    >
+      @if (copied()) {
+        Skopiuj link ✔
+      } @else {
+      Skopiuj link
+      }
+    </button>
+
     <p><a [href]="fetchReceiptUrl" class="upload-button no-href">Zobacz paragon</a></p>
+    <p>
 
   </div>
 }

@@ -4,6 +4,7 @@ import QRCode from 'qrcode';
 import { ReceiptService } from '../receipt.service';
 import { ReceiptItem } from '../receipt.model';
 import { environment } from '../../environments/environment';
+import {Clipboard} from '@angular/cdk/clipboard';
 
 @Component({
   imports: [],
@@ -20,6 +21,8 @@ export class ReceiptUploadComponent {
   isLoading = false;
   qrCode = '';
   fetchReceiptUrl = '';
+  private clipboard = inject(Clipboard);
+  copied = signal(false);
 
   login(): void {
     window.location.href = `${environment.apiUrl}/oauth2/authorization/google`;
@@ -70,6 +73,16 @@ export class ReceiptUploadComponent {
       this.status.set('Wystąpił błąd podczas przetwarzania paragonu');
     } finally {
       this.isLoading = false;
+    }
+  }
+
+  copyUrl(): void {
+    const linkCopied = this.clipboard.copy(this.fetchReceiptUrl);
+    if (linkCopied) {
+      this.copied.set(true);
+      setTimeout(() => {
+        this.copied.set(false);
+      }, 2000);
     }
   }
 
